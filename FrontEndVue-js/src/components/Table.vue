@@ -57,7 +57,7 @@ onMounted(async () => {
   try {
     const res = await fetch(`${API}/Products/listed`)  
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    const data = (await res.json()) as IProducto[]      
+    const data = (await res.json()) as IProducto[]               //GPT CODE
     productos.value = data                            
   } catch (e: any) {
     error.value = e.message ?? String(e)
