@@ -1,13 +1,18 @@
+
 <template>
   <nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
-      <h3 class="navbar-brand">App Tareas</h3>
+       <RouterLink :to="{ name: 'table' }" class="me-2" active-class="activo">Tiendita</RouterLink>
+
       <div>
-        <RouterLink exact-active-class="activo" class="me-2" to="/">Home</RouterLink>
-        <RouterLink exact-active-class="activo" to="/tareas">Tareas</RouterLink>
+        <RouterLink :to="{ name: 'sales' }" class="me-2" active-class="activo">Ventas</RouterLink>
+        <RouterLink :to="{ name: 'customers' }" active-class="activo">Clientes</RouterLink>
       </div>
     </div>
   </nav>
+
+  
+
 </template>
 
 <script setup lang="ts">
