@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 //code to connect to data base
 //Scaffold-DbContext "Data Source=DESKTOP-372NBM0\RIC;Database=testDGADB;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
+using ProjectAPIStore.Data;
 
 
 namespace ProjectAPIStore.Models;

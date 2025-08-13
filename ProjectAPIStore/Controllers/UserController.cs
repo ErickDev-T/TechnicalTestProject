@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProjectAPIStore.Models;
+using ProjectAPIStore.Models; // Usuario
+using ProjectAPIStore.Data;   // TestDgadbContext
 
 namespace ProjectAPIStore.Controllers
 {
@@ -62,32 +63,32 @@ namespace ProjectAPIStore.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeletedUser(int id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var user = await _context.Usuarios.FindAsync(id);
             //checking if the user exist 
-            if (usuario == null)
+            if (user == null)
             {
                 return NotFound(); //404
             }
 
-            _context.Usuarios.Remove(usuario);
+            _context.Usuarios.Remove(user);
             await _context.SaveChangesAsync();
             return NoContent();
         }
 
         //search by id
         [HttpGet("search/{id}")]
-        public async Task<ActionResult<Usuario>> searcById(int id)
+        public async Task<ActionResult<Usuario>> searchById(int id)
         {
 
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var user = await _context.Usuarios.FindAsync(id);
 
             //checking if the user exist 
-            if (usuario == null)
+            if (user == null)
             {
                 return NotFound(); //404
             }
 
-            return Ok(usuario);
+            return Ok(user);
         }
 
 

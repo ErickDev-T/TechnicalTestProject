@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProjectAPIStore.Models;
+using ProjectAPIStore.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TestDgadbContext>(options =>
@@ -9,7 +11,6 @@ builder.Services.AddDbContext<TestDgadbContext>(options =>
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
