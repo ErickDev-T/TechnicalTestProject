@@ -17,7 +17,6 @@
       </thead>
 
       <tbody>
-        <!-- ojo con los espacios y el :key -->
         <tr v-for="producto in productos" :key="producto.id">
           <th scope="row">{{ producto.id }}</th>
           <td>{{ producto.nombre }}</td>
@@ -25,11 +24,10 @@
           <td>{{ producto.precio }}</td>
           <td>{{ producto.stock }}</td>
           <td>
-            <!-- pasa number y firma acepta number -->
             <span class="icono" @click="deleted(producto.id)">❌</span>
           </td>
           <td>
-            <span class="icono">🖋️</span>
+            <span class="icono" @click="edit(producto.id)">🖋️</span>
           </td>
         </tr>
       </tbody>
@@ -66,6 +64,11 @@ const deleted = async (id: number) => {
     alert(`No se pudo eliminar: ${e?.message ?? e}`)
   }
 }
+
+const edit = (id: number) => {
+  router.push({ name: 'edit', params: { id } })
+}
+
 
 onMounted(async () => {
   loading.value = true

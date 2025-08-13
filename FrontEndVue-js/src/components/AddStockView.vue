@@ -64,12 +64,9 @@ const formSave = reactive<ProductoDTO>({
   stock: ''
 })
 
-
-
 const loading = ref(false)
 const errorMsg = ref<string | null>(null)
 const okMsg = ref<string | null>(null)
-
 
 onMounted(() =>{
   
