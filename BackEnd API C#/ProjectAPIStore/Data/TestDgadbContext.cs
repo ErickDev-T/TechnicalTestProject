@@ -25,6 +25,7 @@ public partial class TestDgadbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        //Fluent API de EF Core para mapear lu clase Usuario a la tabla y columnas reales en SQL Server
         modelBuilder.Entity<Usuario>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Usuario__3213E83FE12A6F32");

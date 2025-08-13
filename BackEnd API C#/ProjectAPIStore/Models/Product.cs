@@ -6,7 +6,7 @@ namespace ProjectAPIStore.Models
     {
         public int Id { get; set; }
 
-        [Required, StringLength(120)]
+        [Required, StringLength(120)]  // no null or empty and max 120 charactered
         public string Nombre { get; set; } = "";
 
         [StringLength(255)]

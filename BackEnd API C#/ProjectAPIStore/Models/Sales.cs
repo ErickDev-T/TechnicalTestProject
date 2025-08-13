@@ -12,7 +12,7 @@ namespace ProjectAPIStore.Models
         [Required, StringLength(120)]
         public string Cliente { get; set; } = "";
 
-        [Required] // guardas la lista de productos como texto (p. ej. JSON)
+        [Required] // guarda la lista de productos como texto 
         public string ListaProductos { get; set; } = "";
 
         public decimal Total { get; set; }

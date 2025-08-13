@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using ProjectAPIStore.Data;   // tu DbContext
-using ProjectAPIStore.Models; // si lo usas
+using ProjectAPIStore.Data;  
+using ProjectAPIStore.Models; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,17 +19,16 @@ builder.Services.AddCors(options =>
     );
 });
 
-// Controllers + Swagger (Swashbuckle)
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Redirigir raíz a Swagger
+// redirigir raíz a Swagger
 app.MapGet("/", ctx =>
 {
-    ctx.Response.Redirect("/swagger/index.html", permanent: false);
+    ctx.Response.Redirect("/swagger/index.html", permanent: false); // direct to that URL
     return Task.CompletedTask;
 });
 
@@ -39,9 +38,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
 app.UseHttpsRedirection();
 
-app.UseCors("AllowFrontend");   // <- antes de MapControllers
+app.UseCors("AllowFrontend");  
 
 app.UseAuthorization();
 
