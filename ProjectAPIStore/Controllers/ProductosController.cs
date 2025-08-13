@@ -21,9 +21,9 @@ namespace ProjectAPIStore.Controllers
 
         //get products
         [HttpGet("listed")]
-        public async Task<ActionResult<List<Producto>>> GetProducts()
+        public async Task<ActionResult<List<Product>>> GetProducts()
         {
-            var products = await _context.Productos.ToListAsync();
+            var products = await _context.Product.ToListAsync();
             return Ok(products); //200
         }
 
@@ -31,27 +31,27 @@ namespace ProjectAPIStore.Controllers
 
         //edit products
         [HttpPost("SaveProduct")]
-        public async Task<ActionResult<Producto>> SaveProduct(Producto producto)
+        public async Task<ActionResult<Product>> SaveProduct(Product product)
 
         {
-            _context.Productos.Add(producto);
+            _context.Product.Add(product);
             await _context.SaveChangesAsync();
-            return StatusCode(StatusCodes.Status201Created, producto);
+            return StatusCode(StatusCodes.Status201Created, product);
         }
 
 
 
         // update product
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<Producto>> UpdateProduct(int id, Producto producto)
+        public async Task<ActionResult<Product>> UpdateProduct(int id, Product product)
         {
-            var dbProd = await _context.Productos.FindAsync(id);
+            var dbProd = await _context.Product.FindAsync(id);
             if (dbProd == null) return NotFound(); // 404
 
-            dbProd.Nombre = producto.Nombre;
-            dbProd.Descripcion = producto.Descripcion;
-            dbProd.Precio = producto.Precio;
-            dbProd.Stock = producto.Stock;
+            dbProd.Nombre = product.Nombre;
+            dbProd.Descripcion = product.Descripcion;
+            dbProd.Precio = product.Precio;
+            dbProd.Stock = product.Stock;
 
             await _context.SaveChangesAsync();
             return Ok(dbProd);
@@ -61,10 +61,10 @@ namespace ProjectAPIStore.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
-            var prod = await _context.Productos.FindAsync(id);
+            var prod = await _context.Product.FindAsync(id);
             if (prod == null) return NotFound(); // 404
 
-            _context.Productos.Remove(prod);
+            _context.Product.Remove(prod);
             await _context.SaveChangesAsync();
             return NoContent();
         }
@@ -72,9 +72,9 @@ namespace ProjectAPIStore.Controllers
 
         // search by id
         [HttpGet("search/{id}")]
-        public async Task<ActionResult<Producto>> SearchById(int id)
+        public async Task<ActionResult<Product>> SearchById(int id)
         {
-            var prod = await _context.Productos.FindAsync(id);
+            var prod = await _context.Product.FindAsync(id);
             if (prod == null) return NotFound(); // 404
             return Ok(prod);
         }

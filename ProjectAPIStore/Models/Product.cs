@@ -2,7 +2,7 @@
 
 namespace ProjectAPIStore.Models
 {
-    public class Producto
+    public class Product
     {
         public int Id { get; set; }
 

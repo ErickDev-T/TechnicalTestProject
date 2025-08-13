@@ -18,7 +18,10 @@ public partial class TestDgadbContext : DbContext
     }
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
-    public virtual DbSet<Producto> Productos { get; set; }
+    public virtual DbSet<Product> Product { get; set; }
+
+    public virtual DbSet<Sales> Sales { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -37,7 +40,7 @@ public partial class TestDgadbContext : DbContext
         });
 
 
-        modelBuilder.Entity<Producto>(entity =>
+        modelBuilder.Entity<Product>(entity =>
         {
             entity.HasKey(p => p.Id).HasName("PK_Productos");
             entity.ToTable("Productos");
@@ -47,6 +50,20 @@ public partial class TestDgadbContext : DbContext
             entity.Property(p => p.Descripcion).HasMaxLength(255).IsUnicode(true).HasColumnName("Descripcion");
             entity.Property(p => p.Precio).HasPrecision(18, 2).HasColumnName("Precio");
             entity.Property(p => p.Stock).HasColumnName("Stock");
+        });
+
+
+
+        modelBuilder.Entity<Sales>(entity =>
+        {
+            entity.HasKey(v => v.Id).HasName("PK_Ventas");
+            entity.ToTable("Ventas");
+
+            entity.Property(v => v.Id).HasColumnName("Id");
+            entity.Property(v => v.Fecha).HasColumnType("datetime").HasColumnName("Fecha");
+            entity.Property(v => v.Cliente).HasMaxLength(120).IsUnicode(true).HasColumnName("Cliente");
+            entity.Property(v => v.ListaProductos).IsUnicode(true).HasColumnName("ListaProductos");
+            entity.Property(v => v.Total).HasPrecision(18, 2).HasColumnName("Total");
         });
 
 
