@@ -5,9 +5,7 @@
       <RouterLink :to="{ name: 'table' }" custom v-slot="{ navigate, isActive }">
         <a
           @click="navigate"
-          class="d-block mb-4 fw-semibold text-decoration-none"
-          :class="isActive ? 'link-active' : 'link-default'"
-        >
+          class="d-block mb-2 fw-semibold text-decoration-none">
           Tiendita
         </a>
       </RouterLink>
@@ -15,19 +13,19 @@
       <!-- Menú -->
       <nav class="nav flex-column">
         <RouterLink :to="{ name: 'table' }" custom v-slot="{ navigate, isActive }">
-          <a @click="navigate" class="nav-link px-0" :class="isActive ? 'link-active' : 'link-default'">
+          <a @click="navigate" class="nav-link px-3" :class="isActive ? 'link-active' : 'link-default'">
             Productos
           </a>
         </RouterLink>
 
         <RouterLink :to="{ name: 'sales' }" custom v-slot="{ navigate, isActive }">
-          <a @click="navigate" class="nav-link px-0" :class="isActive ? 'link-active' : 'link-default'">
+          <a @click="navigate" class="nav-link px-3" :class="isActive ? 'link-active' : 'link-default'">
             Ventas
           </a>
         </RouterLink>
 
         <RouterLink :to="{ name: 'customers' }" custom v-slot="{ navigate, isActive }">
-          <a @click="navigate" class="nav-link px-0" :class="isActive ? 'link-active' : 'link-default'">
+          <a @click="navigate" class="nav-link px-3" :class="isActive ? 'link-active' : 'link-default'">
             Clientes
           </a>
         </RouterLink>
@@ -35,6 +33,13 @@
         <RouterLink :to="{ name: 'add-stock' }" custom v-slot="{ navigate, isActive }">
           <a @click="navigate" class="nav-link px-0 mt-3" :class="isActive ? 'link-active' : 'link-default'">
             ➕ Agregar producto
+          </a>
+        </RouterLink>
+
+
+        <RouterLink :to="{ name: 'sell' }" custom v-slot="{ navigate, isActive }">
+          <a @click="navigate" class="nav-link px-0 mt-3" :class="isActive ? 'link-active' : 'link-default'">
+            🏪 Vender producto
           </a>
         </RouterLink>
       </nav>

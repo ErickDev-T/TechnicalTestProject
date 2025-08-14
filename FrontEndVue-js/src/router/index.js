@@ -7,6 +7,7 @@ import SalesView from '../components/SalesView.vue';
 import CustomerView from '../components/CustomerView.vue';
 import Table from '../components/Table.vue'
 import Edit from '../components/EditStockView.vue'
+import Sell from '../components/SellProductView.vue'
 
 const routes = [
   { path: '/', name: 'stock', component: StockView },
@@ -15,6 +16,7 @@ const routes = [
   { path: '/customers', name: 'customers', component: CustomerView },
   { path: '/table', name: 'table', component: Table},
   { path: '/edit/:id', name: 'edit', component: Edit, props: true },
+   { path: '/sell', name: 'sell', component: Sell},
 ];
 
 export const router = createRouter({

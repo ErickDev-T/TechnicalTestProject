@@ -1,49 +1,46 @@
 <template>
-  <div class="card mx-auto mt-5 p-3" style="max-width: 350px; width: 100%;">
-    <h1 class="text-center">Agregar producto</h1>
+  <div class="card mx-auto mt-5 shadow-lg border-0" style="max-width: 400px; width: 100%;">
+    <div class="card-header bg-primary text-white text-center py-3">
+      <i class="bi bi-box-seam fs-3"></i>
+      <h4 class="mt-2 mb-0">Agregar Producto</h4>
+    </div>
 
     <form @submit.prevent="formProcesing" class="card-body">
-      <input
-        class="form-control mt-2"
-        type="text"
-        v-model.trim="formSave.nombre"
-        placeholder="Nombre"
-        required
-      />
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="nombre" placeholder="Nombre"
+               v-model.trim="formSave.nombre" required>
+        <label for="nombre">Nombre</label>
+      </div>
 
-      <input
-        class="form-control mt-2"
-        type="text"
-        v-model.trim="formSave.descripcion"
-        placeholder="Descripción"
-        required
-      />
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="descripcion" placeholder="Descripción"
+               v-model.trim="formSave.descripcion" required>
+        <label for="descripcion">Descripción</label>
+      </div>
 
-      <input
-        class="form-control mt-2"
-        type="text"
-        v-model="formSave.precio"
-        placeholder="Precio"
-        required
-      />
+      <div class="form-floating mb-3">
+        <input class="form-control" id="precio" placeholder="Precio"
+               v-model="formSave.precio" required>
+        <label for="precio">Precio</label>
+      </div>
 
-      <input
-        class="form-control mt-2"
-        type="text"
-        v-model="formSave.stock"
-        placeholder="Stock"
-        required
-      />
+      <div class="form-floating mb-4">
+        <input class="form-control" id="stock" placeholder="Stock"
+               v-model="formSave.stock" required>
+        <label for="stock">Stock</label>
+      </div>
 
-      <button class="btn btn-primary w-100 mt-3" :disabled="loading">
+      <button class="btn btn-success w-100 py-2" :disabled="loading">
+        <i class="bi bi-check-circle me-1"></i>
         {{ loading ? 'Guardando...' : 'Guardar' }}
       </button>
 
-      <p v-if="errorMsg" class="text-danger mt-2">{{ errorMsg }}</p>
-      <p v-if="okMsg" class="text-success mt-2">{{ okMsg }}</p>
+      <p v-if="errorMsg" class="text-danger mt-3">{{ errorMsg }}</p>
+      <p v-if="okMsg" class="text-success mt-3">{{ okMsg }}</p>
     </form>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import {API, IProducto} from '../constantes';
