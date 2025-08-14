@@ -64,7 +64,7 @@ const formatDate = (dateStr: string) => {
 const verDetalles = (id: number) => {
   Swal.fire({
     title: `Detalles de la venta #${id}`,
-    text: 'Aquí podrías mostrar un modal con los productos vendidos.',
+    text: 'para mostrar un modal con los productos vendidos.',
     icon: 'info'
   })
 }
@@ -82,4 +82,7 @@ onMounted(async () => {
     loading.value = false
   }
 })
+
+
+
 </script>

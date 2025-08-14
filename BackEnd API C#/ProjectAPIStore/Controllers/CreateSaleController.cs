@@ -1,61 +1,75 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProjectAPIStore.Models;
 using ProjectAPIStore.Data;
+using ProjectAPIStore.Models;
 
 namespace ProjectAPIStore.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] // => /api/CreateSale
     public class CreateSaleController : ControllerBase
     {
         private readonly TestDgadbContext _context;
+        public CreateSaleController(TestDgadbContext context) => _context = context;
 
-        public CreateSaleController(TestDgadbContext context)
-        {
-            _context = context;
-        }
-
+        // ÚNICO ENDPOINT
+        // Acepta payloads con o sin "precioUnitario" (es nullable)
         [HttpPost("ventas")]
-        public async Task<IActionResult> CrearVenta([FromBody] CrearVentaDto dto)
+        public async Task<IActionResult> CrearVenta([FromBody] CreateSell dto)
         {
-            if (dto == null || dto.Items == null || !dto.Items.Any())
+            if (dto is null || dto.Items is null || !dto.Items.Any())
                 return BadRequest("No se enviaron productos.");
 
             using var tx = await _context.Database.BeginTransactionAsync();
 
-            // Traer productos involucrados
+            // productos involucrados
             var ids = dto.Items.Select(i => i.ProductoId).Distinct().ToList();
             var productos = await _context.Product
                 .Where(p => ids.Contains(p.Id))
                 .ToDictionaryAsync(p => p.Id);
 
-            // Validar stock
-            foreach (var item in dto.Items)
+            // validar
+            foreach (var it in dto.Items)
             {
-                if (!productos.ContainsKey(item.ProductoId))
-                    return BadRequest($"Producto ID {item.ProductoId} no existe.");
+                if (!productos.ContainsKey(it.ProductoId))
+                    return BadRequest($"Producto ID {it.ProductoId} no existe.");
 
-                if (productos[item.ProductoId].Stock < item.Cantidad)
-                    return BadRequest($"No hay stock suficiente para {productos[item.ProductoId].Nombre}.");
+                if (it.Cantidad <= 0)
+                    return BadRequest($"Cantidad inválida para producto {it.ProductoId}.");
+
+                var p = productos[it.ProductoId];
+                if (p.Stock < it.Cantidad)
+                    return BadRequest($"Stock insuficiente para {p.Nombre}. Disponible: {p.Stock}");
             }
 
-            // Crear venta
+            // calcular total y lista
+            decimal total = 0m;
+            var partes = new List<string>();
+            foreach (var it in dto.Items)
+            {
+                var p = productos[it.ProductoId];
+                var precio = it.PrecioUnitario ?? p.Precio; // si no viene, usa el de Productos
+                total += precio * it.Cantidad;
+                partes.Add($"{p.Nombre} x{it.Cantidad}");
+            }
+
+            // crear venta
             var venta = new Sales
             {
-                Cliente = dto.Cliente,
+                Cliente = string.IsNullOrWhiteSpace(dto.Cliente) ? "Consumidor final" : dto.Cliente,
                 Fecha = DateTime.Now,
-                ListaProductos = string.Join(", ", dto.Items.Select(i => $"{productos[i.ProductoId].Nombre} x{i.Cantidad}")),
-                Total = dto.Items.Sum(i => i.Cantidad * productos[i.ProductoId].Precio)
+                ListaProductos = string.Join(", ", partes),
+                Total = total
             };
 
             _context.Sales.Add(venta);
             await _context.SaveChangesAsync();
 
-            // Actualizar stock
-            foreach (var item in dto.Items)
+            // descontar stock
+            foreach (var it in dto.Items)
             {
-                productos[item.ProductoId].Stock -= item.Cantidad;
+                var p = productos[it.ProductoId];
+                p.Stock -= it.Cantidad;
             }
 
             await _context.SaveChangesAsync();
@@ -63,17 +77,5 @@ namespace ProjectAPIStore.Controllers
 
             return Ok(venta);
         }
-    }
-
-    public class CrearVentaDto
-    {
-        public string Cliente { get; set; }
-        public List<VentaItemDto> Items { get; set; }
-    }
-
-    public class VentaItemDto
-    {
-        public int ProductoId { get; set; }
-        public int Cantidad { get; set; }
     }
 }
