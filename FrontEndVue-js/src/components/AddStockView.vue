@@ -34,7 +34,7 @@
         <i class="bi bi-check-circle me-1"></i>
         {{ loading ? 'Guardando...' : 'Guardar' }}
       </button>
-
+          <!--se muestra solo si el igual es verdadero--> 
       <p v-if="errorMsg" class="text-danger mt-3">{{ errorMsg }}</p>
       <p v-if="okMsg" class="text-success mt-3">{{ okMsg }}</p>
     </form>

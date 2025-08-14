@@ -50,6 +50,7 @@
 </template>
 
 <script setup lang="ts">
+//ref para detectar cambios
 import { ref, computed, onMounted } from 'vue'
 import Swal from 'sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'

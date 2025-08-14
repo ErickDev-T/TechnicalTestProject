@@ -12,8 +12,7 @@ namespace ProjectAPIStore.Controllers
         private readonly TestDgadbContext _context;
         public CreateSaleController(TestDgadbContext context) => _context = context;
 
-        // ÚNICO ENDPOINT
-        // Acepta payloads con o sin "precioUnitario" (es nullable)
+
         [HttpPost("ventas")]
         public async Task<IActionResult> CrearVenta([FromBody] CreateSell dto)
         {
