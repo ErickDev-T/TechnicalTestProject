@@ -1,7 +1,7 @@
 <template>
   <aside class="bg-body-tertiary border-end vh-100" style="width: 240px;">
     <div class="p-3">
-      <!-- Título / Home -->
+      <!-- título / Home -->
       <RouterLink :to="{ name: 'table' }" custom v-slot="{ navigate, isActive }">
         <a
           @click="navigate"
@@ -10,7 +10,7 @@
         </a>
       </RouterLink>
 
-      <!-- Menú -->
+      <!-- menu -->
       <nav class="nav flex-column">
         <RouterLink :to="{ name: 'table' }" custom v-slot="{ navigate, isActive }">
           <a @click="navigate" class="nav-link px-3" :class="isActive ? 'link-active' : 'link-default'">
@@ -35,8 +35,7 @@
             ➕ Agregar producto
           </a>
         </RouterLink>
-
-
+        
         <RouterLink :to="{ name: 'sell' }" custom v-slot="{ navigate, isActive }">
           <a @click="navigate" class="nav-link px-0 mt-3" :class="isActive ? 'link-active' : 'link-default'">
             🏪 Vender producto
@@ -51,6 +50,6 @@
 </script>
 
 <style scoped>
-.link-default { color: #343a40; }
-.link-active  { color: #000; background: #e9ecef; border-radius: .5rem; padding: .25rem .5rem; }
+  .link-default { color: #343a40; }
+  .link-active  { color: #000; background: #e9ecef; border-radius: .5rem; padding: .25rem .5rem; }
 </style>

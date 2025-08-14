@@ -74,94 +74,94 @@
 
 <script setup lang="ts">
 
-import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { API, IProducto } from '../constantes'
+  import { ref, onMounted } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
+  import { API, IProducto } from '../constantes'
 
-const route = useRoute()
-const router = useRouter()
-const id = Number(route.params.id)
+  const route = useRoute()
+  const router = useRouter()
+  const id = Number(route.params.id)
 
-const producto = ref<IProducto | null>(null)
-const loading = ref(false)
-const saving = ref(false)
-const error = ref<string | null>(null)
+  const producto = ref<IProducto | null>(null)
+  const loading = ref(false)
+  const saving = ref(false)
+  const error = ref<string | null>(null)
 
-// toma los datos dasde la tabla
-const stateProd = (history.state && (history.state as any).producto) as IProducto | undefined
-if (stateProd && stateProd.id === id) {
-  producto.value = { ...stateProd }
-}
+  // si el producto ya esta aqui no lo llamo desde a API otra vez
+  const stateProd = (history.state && (history.state as any).producto) as IProducto | undefined
+  if (stateProd && stateProd.id === id) {
+    producto.value = { ...stateProd }
+  }
+  // espera que se cargue el DOM para traer los productos
+  onMounted(async () => {
+    if (producto.value) return // revida si productos tien datos
+    loading.value = true
+    error.value = null
+    try {
+      const res = await fetch(`${API}/Products/listed`)
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const list = (await res.json()) as IProducto[]
+      const found = list.find(p => p.id === id)
+      if (!found) {
+        return
+      }
+      producto.value = { ...found }
+    } catch (e: any) {
+      error.value = e?.message ?? String(e)
+    } finally {
+      loading.value = false
+    }
+  }
+)
 
-onMounted(async () => {
-  if (producto.value) return
-  loading.value = true
-  error.value = null
-  try {
-    const res = await fetch(`${API}/Products/listed`)
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    const list = (await res.json()) as IProducto[]
-    const found = list.find(p => p.id === id)
-    if (!found) {
+  // Guardar 
+  const save = async () => {
+    if (!producto.value) return //si hay valores dlos devuelve
+  
+    if (!producto.value.nombre?.trim()) {
+      alert('Nombre es requerido')
+      return
+    } // validaciones si es nulo o menor a 0
+    if (producto.value.precio == null || producto.value.precio < 0) {
+      alert('Precio inválido')
       return
     }
-    producto.value = { ...found }
-  } catch (e: any) {
-    error.value = e?.message ?? String(e)
-  } finally {
-    loading.value = false
-  }
-})
-
-// 3) Guardar 
-const save = async () => {
-  if (!producto.value) return
-  // Validaciones 
-  if (!producto.value.nombre?.trim()) {
-    alert('Nombre es requerido')
-    return
-  }
-  if (producto.value.precio == null || producto.value.precio < 0) {
-    alert('Precio inválido')
-    return
-  }
-  if (producto.value.stock == null || producto.value.stock < 0) {
-    alert('Stock inválido')
-    return
-  }
-
-  saving.value = true
-  error.value = null
-  try {
-    // asegura que el body tenga el id correcto
-    const body: IProducto = {
-      ...producto.value,
-      id 
+    if (producto.value.stock == null || producto.value.stock < 0) {
+      alert('Stock inválido')
+      return
     }
 
-    const res = await fetch(`${API}/Products/update/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    })
+    saving.value = true
+    error.value = null
+    try {
+      // asegura que el body tenga el id correcto
+      const body: IProducto = {
+        ...producto.value,
+        id 
+      }
 
-    if (!res.ok) {
-      // devuelven 200 con el objeto otros 204 si no es ok avisa
-      throw new Error(`HTTP ${res.status}`)
+      const res = await fetch(`${API}/Products/update/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+
+      if (!res.ok) {
+        // devuelven 200 con el objeto otros 204 si no es ok avisa
+        throw new Error(`HTTP ${res.status}`)
+      }
+
+      alert('Producto actualizado correctamente')
+      router.push({ name: 'stock' })
+    } catch (e: any) {
+      error.value = e?.message ?? String(e)
+      alert(`No se pudo actualizar: ${error.value}`)
+    } finally {
+      saving.value = false
     }
-
-
-    alert('Producto actualizado correctamente')
-    router.push({ name: 'stock' })
-  } catch (e: any) {
-    error.value = e?.message ?? String(e)
-    alert(`No se pudo actualizar: ${error.value}`)
-  } finally {
-    saving.value = false
   }
-}
 </script>
 
 <style scoped>
-.container { max-width: 800px; }
+  .container { max-width: 800px; }
 </style>

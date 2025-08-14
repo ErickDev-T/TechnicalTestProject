@@ -22,6 +22,6 @@ const routes = [
 ];
 
 export const router = createRouter({
-  history: createWebHistory(), // usa hash si hospedas en estático sin fallback: createWebHashHistory()
+  history: createWebHistory(), 
   routes,
 });

@@ -268,7 +268,7 @@ const submit = async () => {
     if (!res.ok) throw new Error(`No se pudo crear la venta (HTTP ${res.status})`)
     const venta = await res.json()
 
-    // Descontar stock localmente para que el UI se actualice sin recargar
+    // descontar stock localmente para que el UI se actualice sin recargar
     for (const i of cart.value) {
       const p = productos.value.find(p => p.id === i.productoId)
       if (p) p.stock = Math.max(0, p.stock - i.cantidad)
