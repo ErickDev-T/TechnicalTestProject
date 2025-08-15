@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-  //ref para detectar cambios // computed actualiza el DOM ccuando hay cambios // onMouned para traer datos despues que se cargue el DOM
+  //ref para detectar cambios // computed recalcula funciones en el DOM ccuando hay cambios // onMouned para traer datos despues que se cargue el DOM
   import { ref, computed, onMounted } from 'vue'
   import Swal from 'sweetalert2'
   import 'sweetalert2/dist/sweetalert2.min.css'

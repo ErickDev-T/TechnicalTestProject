@@ -37,11 +37,13 @@
 </template>
 
 <script setup lang="ts">
+
 import { onMounted, ref } from 'vue'
 import { API } from '../constantes'
 import Swal from 'sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 
+//definiendo los valores y tipos de datos de las ventas
 interface IVenta {
   id: number
   fecha: string
@@ -50,9 +52,9 @@ interface IVenta {
 }
 
 const ventas = ref<IVenta[]>([])
-const loading = ref(false)
 const error = ref<string | null>(null)
 
+//cambiando el formato de la fecha
 const formatDate = (dateStr: string) => {
   return new Date(dateStr).toLocaleDateString('es-DO', {
     year: 'numeric',
@@ -60,7 +62,7 @@ const formatDate = (dateStr: string) => {
     day: 'numeric'
   })
 }
-
+//pop up con sus parametros
 const verDetalles = (id: number) => {
   Swal.fire({
     title: `Detalles de la venta #${id}`,
@@ -68,19 +70,16 @@ const verDetalles = (id: number) => {
     icon: 'info'
   })
 }
-
+// carga los datos cuando el DOM este cargado 
 onMounted(async () => {
-  loading.value = true
   try {
     const res = await fetch(`${API}/Ventas/listed`)
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     ventas.value = await res.json() as IVenta[]
   } catch (e: any) {
-    error.value = e.message ?? String(e)
+    error.value = e.message ?? String(e) //almacena el error en un msg
     await Swal.fire({ icon: 'error', title: 'Error', text: error.value })
-  } finally {
-    loading.value = false
-  }
+  } 
 })
 
 

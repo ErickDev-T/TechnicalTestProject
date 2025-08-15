@@ -150,6 +150,8 @@
 </template>
 
 <script setup lang="ts">
+
+//ref para detectar cambios // computed recalcula funciones en el DOM ccuando hay cambios // onMouned para traer datos despues que se cargue el DOM
 import { computed, onMounted, ref } from 'vue'
 import { API } from '../constantes'
 
