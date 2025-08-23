@@ -18,3 +18,19 @@
 ![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
+
+## Overview
+
+**TechnicalTestProject** is a full-stack development framework that combines a scalable **C#/.NET backend API** with a modern **Vue.js frontend**.  
+Designed for rapid development and maintainability, it provides a comprehensive architecture for managing sales, products, and users within a unified environment.
+
+### Why TechnicalTestProject?
+
+This project simplifies building complex web applications by offering:
+
+- 🧩 **Modular Architecture**: Clear separation of backend and frontend components for easy maintenance and scalability.  
+- 🚀 **Rapid Development**: Modern tools like Vite, TypeScript, and Swagger streamline coding, testing, and deployment.  
+- 🔍 **Robust Data Management**: Entity Framework Core ensures reliable, efficient database interactions.  
+- 🎯 **API-Driven Workflow**: RESTful endpoints and predefined HTTP requests facilitate seamless integration and testing.  
+- 🖥️ **User-Centric UI**: Dynamic, responsive interfaces with intuitive navigation for inventory, sales, and user management.  
+- 🔧 **Configurable Environment**: Environment-specific settings support flexible development and deployment scenarios.  
