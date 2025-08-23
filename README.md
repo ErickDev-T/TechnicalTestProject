@@ -2,7 +2,6 @@
 
 *Empowering Innovation, Accelerating Success Every Step*
 
-![Last Commit](https://img.shields.io/badge/last%20commit-august-brightgreen)
 ![Vue](https://img.shields.io/badge/vue-48.8%25-41B883?logo=vue.js&logoColor=white)
 ![Languages](https://img.shields.io/badge/languages-6-blue)
 
